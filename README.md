@@ -13,7 +13,7 @@ to match your desired configuration. For example:
 
 ```hcl
 module "cloudfront_waf" {
-  source = "github.com/codeforamerica/tofu-modules/aws/logging"
+  source = "github.com/codeforamerica/tofu-modules-aws-logging"
 
   project     = "my-project"
   environment = "dev"
