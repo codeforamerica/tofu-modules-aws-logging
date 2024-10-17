@@ -11,6 +11,16 @@ resource "aws_s3_bucket" "logs" {
   tags = var.tags
 }
 
+resource "aws_s3_bucket_ownership_controls" "example" {
+  bucket = aws_s3_bucket.logs.id
+
+  rule {
+    # This is necessary for certain AWS services to write to the bucket,
+    # including CloudFront
+    object_ownership = "ObjectWriter"
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "good_example" {
   bucket                  = aws_s3_bucket.logs.id
   block_public_acls       = true
