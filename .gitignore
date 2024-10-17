@@ -37,3 +37,7 @@ terraform.rc
 # Ignore release artifacts
 release.md
 /*.tar.gz
+
+act-payload.json
+*.iml
+.idea
