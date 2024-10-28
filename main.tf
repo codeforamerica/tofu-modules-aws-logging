@@ -3,7 +3,7 @@
 #trivy:ignore:avd-aws-0089
 resource "aws_s3_bucket" "logs" {
   bucket        = var.bucket_suffix ? null : "${local.prefix}-logs"
-  bucket_prefix = var.bucket_suffix ? "${local.prefix}-logs" : null
+  bucket_prefix = var.bucket_suffix ? "${local.prefix}-logs-" : null
 
   lifecycle {
     prevent_destroy = true
