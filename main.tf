@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "logs" {
   bucket_prefix = var.bucket_suffix ? "${local.prefix}-logs-" : null
 
   lifecycle {
-    prevent_destroy = true
+    create_before_destroy = true
   }
 
   tags = var.tags
