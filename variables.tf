@@ -1,3 +1,9 @@
+variable "bucket_suffix" {
+  type        = bool
+  description = "Adds a random suffix to the bucket name."
+  default     = false
+}
+
 variable "cloudwatch_log_retention" {
   type        = number
   description = "Number of days to retain logs in CloudWatch."
