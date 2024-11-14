@@ -1,12 +1,13 @@
 # AWS Logging Module
 
-[![Main Checks](https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml/badge.svg)](https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml) ![GitHub Release](https://img.shields.io/github/v/release/codeforamerica/tofu-modules-aws-logging?logo=github&label=Latest%20Release)
+[![Main Checks][badge-checks]][code-checks] [![GitHub Release][badge-release]][latest-release]
 
 This module created an S3 bucket for logging, as well as a KMS for CloudWatch
 logs.
 
-_Note: The bucket created by this module uses AES256 encryption. CMKs (Customer
-Managed Keys) are [not supported] for access logging._
+> [!NOTE]
+> The bucket created by this module uses AES256 encryption. CMKs (Customer
+> Managed Keys) are [not supported] for access logging.
 
 ## Usage
 
@@ -15,7 +16,7 @@ to match your desired configuration. For example:
 
 ```hcl
 module "logging" {
-  source = "github.com/codeforamerica/tofu-modules-aws-logging"
+  source = "github.com/codeforamerica/tofu-modules-aws-logging?ref=1.2.1"
 
   project     = "my-project"
   environment = "dev"
@@ -56,12 +57,12 @@ to `cloudwatch_log_retention` will be used.
 
 ```hcl
 log_groups = {
-    "/sample/log/group" = {},
-    "waf" = {
-      name = "aws-waf-logs-cfa/waf/demo"
-      tags = { source = "waf" }
-    }
+  "/sample/log/group" = {},
+  "waf" = {
+    name = "aws-waf-logs-cfa/waf/demo"
+    tags = { source = "waf" }
   }
+}
 ```
 
 The following options are available for each log group:
@@ -84,5 +85,9 @@ The following options are available for each log group:
 | kms_key_arn        | ARN of the KMS encryption key.                  | `string`      |
 | log_groups         | Map of log group names and ARNs.                | `map(string)` |
 
+[badge-checks]: https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml/badge.svg
+[badge-release]: https://img.shields.io/github/v/release/codeforamerica/tofu-modules-aws-logging?logo=github&label=Latest%20Release
+[code-checks]: https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml
+[latest-release]: https://github.com/codeforamerica/tofu-modules-aws-logging/releases/latest
 [log_groups]: #log_groups
 [not supported]: https://repost.aws/knowledge-center/s3-server-access-log-not-delivered
