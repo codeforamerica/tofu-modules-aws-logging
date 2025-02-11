@@ -20,6 +20,38 @@ module "s3" {
     elb_account_arn : data.aws_elb_service_account.current.arn
   })))
 
+  lifecycle_configuration = [
+    {
+      id      = "logs"
+      status = "Enabled"
+
+      abort_incomplete_multipart_upload_days = 7
+
+      # Transition the current version to infrequent access to reduce costs.
+      transition = [
+        {
+          days          = var.object_ia_age
+          storage_class = "STANDARD_IA"
+        }
+      ]
+
+      # Expire non-current versions.
+      noncurrent_version_expiration = [
+        {
+          days = var.object_noncurrent_expiration
+        }
+      ]
+
+      # Expire current versions. Objects will be deleted after the expiration,
+      # baed on the non-current expiration.
+      expiration = [
+        {
+          days = var.object_expiration
+        }
+      ]
+    }
+  ]
+
   tags = merge({ use = "logging" }, var.tags)
 }
 

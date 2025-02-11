@@ -44,6 +44,17 @@ variable "log_groups_to_datadog" {
   default     = true
 }
 
+variable "object_expiration" {
+  type = number
+  description = "Age (in days) before logs in S3 are expired."
+}
+
+variable "object_ia_age" {
+  type        = number
+  description = "Age (in days) before logs in S3 are moved to to the infrequent access storage tier."
+  default     = 30
+}
+
 variable "object_lock_mode" {
   type        = string
   description = "Object lock mode for the bucket."
@@ -76,6 +87,12 @@ variable "object_lock_period" {
 variable "object_lock_retention" {
   type        = number
   description = "Retention age based on the lock period."
+  default     = 30
+}
+
+variable "object_noncurrent_expiration" {
+  type        = number
+  description = "Age (in days) before non-current versions of logs in S3 are expired."
   default     = 30
 }
 
