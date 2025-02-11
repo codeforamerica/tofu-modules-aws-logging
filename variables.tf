@@ -68,7 +68,7 @@ variable "object_lock_period" {
     condition = contains([
       "days",
       "years"
-    ], var.object_lock_mode)
+    ], var.object_lock_period)
     error_message = "Valid object lock periods are: days, years."
   }
 }
