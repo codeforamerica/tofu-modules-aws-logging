@@ -22,7 +22,7 @@ module "s3" {
 
   lifecycle_configuration = [
     {
-      id      = "logs"
+      id     = "logs"
       status = "Enabled"
 
       abort_incomplete_multipart_upload_days = 7
@@ -63,8 +63,8 @@ resource "aws_s3_bucket_object_lock_configuration" "lock" {
   rule {
     default_retention {
       mode  = var.object_lock_mode
-      days  = var.object_lock_period == "days" ? var.object_lock_retention : null
-      years = var.object_lock_period == "years" ? var.object_lock_retention : null
+      days  = var.object_lock_period == "days" ? var.object_lock_age : null
+      years = var.object_lock_period == "years" ? var.object_lock_age : null
     }
   }
 }

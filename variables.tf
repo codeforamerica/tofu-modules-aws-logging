@@ -47,7 +47,7 @@ variable "log_groups_to_datadog" {
 variable "object_expiration" {
   type        = number
   description = "Age (in days) before logs in S3 are expired."
-  default = 30
+  default = 90
 }
 
 variable "object_ia_age" {
@@ -85,9 +85,9 @@ variable "object_lock_period" {
   }
 }
 
-variable "object_lock_retention" {
+variable "object_lock_age" {
   type        = number
-  description = "Retention age based on the lock period."
+  description = "Age (based on the lock period) of an object before the lock is removed."
   default     = 30
 }
 
