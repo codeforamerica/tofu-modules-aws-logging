@@ -22,9 +22,9 @@ file to reflect the new locations.
 > It is highly recommended to back up your state file before making any changes
 > to it. This will allow you to restore the state in the event of an error.
 >
-> To create a local backup of your state file, use the command `terraform state
+> To create a local backup of your state file, use the command `tofu state
 > pull > local-state.json`. In the event of an issue, you can restore the state
-> with `terraform state push local-state.json`.
+> with `tofu state push -force local-state.json`.
 
 If this module is currently located at `module.logging`, you can update the
 state file with the following commands:
