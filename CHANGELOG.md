@@ -18,8 +18,16 @@ This release includes breaking changes to the location of certain resources. If
 you are upgrading from a previous version, you will need to update your state
 file to reflect the new locations.
 
-If the module is currently located at `module.logging`, you can update the state
-file with the following commands:
+> [!WARNING]
+> It is highly recommended to back up your state file before making any changes
+> to it. This will allow you to restore the state in the event of an error.
+>
+> To create a local backup of your state file, use the command `terraform state
+> pull > local-state.json`. In the event of an issue, you can restore the state
+> with `terraform state push local-state.json`.
+
+If this module is currently located at `module.logging`, you can update the
+state file with the following commands:
 
 ```bash
 tofu state mv module.logging.aws_s3_bucket.logs module.logging.module.s3.aws_s3_bucket.main
