@@ -10,13 +10,12 @@ and this project adheres to
 > Version [2.0.0] introduces a breaking change. Be sure to following the upgrade
 > instructions before upgrading from a prior version.
 
-## Unreleased
+## 2.0.0 (2025-02-28)
 
-### Upgrading
-
-This release includes breaking changes to the location of certain resources. If
-you are upgrading from a previous version, you will need to update your state
-file to reflect the new locations.
+This release includes new features and fixes to meet NIST SP 800-53 Rev. 5
+controls in Security Hub. These changes introduce breaking modifications to the
+location of certain resources. If you are upgrading from a previous version, you
+will need to update your state file to reflect the new locations.
 
 > [!WARNING]
 > It is highly recommended to back up your state file before making any changes
@@ -49,6 +48,15 @@ can be found in the table below:
 | `aws_s3_bucket_public_access_block.good_example`          | `module.s3.aws_s3_bucket_public_access_block.main[0]`               |
 | `aws_s3_bucket_server_side_encryption_configuration.logs` | `module.s3.aws_s3_bucket_server_side_encryption_configuration.main` |
 | `aws_s3_bucket_versioning.logs`                           | `module.s3.aws_s3_bucket_versioning.main`                           |
+
+### Feat
+
+- Updated to use S3 module. (DEV-109) (#13)
+- Added S3 lifecycle configuration.
+
+### Fix
+
+- Updated bucket policy to actually require SSL.
 
 ## 1.2.1 (2024-10-28)
 
