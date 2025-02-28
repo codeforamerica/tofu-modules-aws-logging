@@ -2,8 +2,7 @@ Version: '2012-10-17'
 Statement:
 - Sid: AllowSSLRequestsOnly
   Effect: Deny
-  Principal:
-    Service: config.amazonaws.com
+  Principal: "*"
   Action:
   - s3:*
   Resource:

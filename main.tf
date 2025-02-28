@@ -1,67 +1,72 @@
-# We don't want to log access to this bucket, as that would cause an infinite
-# loop of logging.
-#trivy:ignore:avd-aws-0089
-resource "aws_s3_bucket" "logs" {
-  bucket        = var.bucket_suffix ? null : "${local.prefix}-logs"
-  bucket_prefix = var.bucket_suffix ? "${local.prefix}-logs-" : null
+module "s3" {
+  source  = "boldlink/s3/aws"
+  version = "2.5.0"
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  bucket            = var.bucket_suffix ? null : "${local.prefix}-logs"
+  bucket_prefix     = var.bucket_suffix ? "${local.prefix}-logs-" : null
+  versioning_status = "Enabled"
 
-  tags = var.tags
-}
+  # S3 access logs don't support encryption with a customer managed key
+  # (CMK).
+  # See https://repost.aws/knowledge-center/s3-server-access-log-not-delivered
+  sse_bucket_key_enabled = true
+  sse_sse_algorithm      = "AES256"
 
-resource "aws_s3_bucket_ownership_controls" "example" {
-  bucket = aws_s3_bucket.logs.id
-
-  rule {
-    # This is necessary for certain AWS services to write to the bucket,
-    # including CloudFront
-    object_ownership = "ObjectWriter"
-  }
-}
-
-resource "aws_s3_bucket_public_access_block" "good_example" {
-  bucket                  = aws_s3_bucket.logs.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
-#tfsec:ignore:aws-s3-encryption-customer-key
-resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
-  bucket = aws_s3_bucket.logs.id
-
-  rule {
-    bucket_key_enabled = true
-
-    apply_server_side_encryption_by_default {
-      # S3 access logs don't support encryption with a customer managed key
-      # (CMK).
-      # See https://repost.aws/knowledge-center/s3-server-access-log-not-delivered
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-resource "aws_s3_bucket_versioning" "logs" {
-  bucket = aws_s3_bucket.logs.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_policy" "logs" {
-  bucket = aws_s3_bucket.logs.id
-  policy = jsonencode(yamldecode(templatefile("${path.module}/templates/bucket-policy.yaml.tftpl", {
+  bucket_policy = jsonencode(yamldecode(templatefile("${path.module}/templates/bucket-policy.yaml.tftpl", {
     account_id : data.aws_caller_identity.identity.account_id,
     partition : data.aws_partition.current.partition,
-    bucket_arn : aws_s3_bucket.logs.arn,
+    name : module.s3.bucket
+    bucket_arn : module.s3.arn,
     elb_account_arn : data.aws_elb_service_account.current.arn
   })))
+
+  lifecycle_configuration = [
+    {
+      id     = "logs"
+      status = "Enabled"
+
+      abort_incomplete_multipart_upload_days = 7
+
+      # Transition the current version to infrequent access to reduce costs.
+      transition = [
+        {
+          days          = var.object_ia_age
+          storage_class = "STANDARD_IA"
+        }
+      ]
+
+      # Expire non-current versions.
+      noncurrent_version_expiration = [
+        {
+          days = var.object_noncurrent_expiration
+        }
+      ]
+
+      # Expire current versions. Objects will be deleted after the expiration,
+      # baed on the non-current expiration.
+      expiration = [
+        {
+          days = var.object_expiration
+        }
+      ]
+    }
+  ]
+
+  tags = merge({ use = "logging" }, var.tags)
+}
+
+resource "aws_s3_bucket_object_lock_configuration" "lock" {
+  for_each = var.object_lock_mode != "DISABLED" ? toset(["this"]) : toset([])
+
+  bucket = module.s3.bucket
+
+  rule {
+    default_retention {
+      mode  = var.object_lock_mode
+      days  = var.object_lock_period == "days" ? var.object_lock_age : null
+      years = var.object_lock_period == "years" ? var.object_lock_age : null
+    }
+  }
 }
 
 resource "aws_kms_key" "logs" {
@@ -72,12 +77,13 @@ resource "aws_kms_key" "logs" {
     account_id : data.aws_caller_identity.identity.account_id
     partition : data.aws_partition.current.partition
     region : data.aws_region.current.name
-    bucket_arn : aws_s3_bucket.logs.arn
+    # bucket_arn : aws_s3_bucket.logs.arn
+    bucket_arn : module.s3.arn
     project : var.project
     environment : var.environment
   })))
 
-  tags = var.tags
+  tags = merge({ use = "logging" }, var.tags)
 }
 
 resource "aws_kms_alias" "logs" {
@@ -92,7 +98,7 @@ resource "aws_cloudwatch_log_group" "logs" {
   retention_in_days = each.value.retention != null ? each.value.retention : var.cloudwatch_log_retention
   kms_key_id        = aws_kms_key.logs.arn
 
-  tags = merge(var.tags, each.value.tags)
+  tags = merge({ use = "logging" }, var.tags, each.value.tags)
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "datadog" {

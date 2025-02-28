@@ -44,6 +44,59 @@ variable "log_groups_to_datadog" {
   default     = true
 }
 
+variable "object_expiration" {
+  type        = number
+  description = "Age (in days) before logs in S3 are expired."
+  default     = 90
+}
+
+variable "object_ia_age" {
+  type        = number
+  description = "Age (in days) before logs in S3 are moved to to the infrequent access storage tier."
+  default     = 30
+}
+
+variable "object_lock_age" {
+  type        = number
+  description = "Age (based on the lock period) of an object before the lock is removed."
+  default     = 30
+}
+
+variable "object_lock_mode" {
+  type        = string
+  description = "Object lock mode for the bucket."
+  default     = "GOVERNANCE"
+
+  validation {
+    condition = contains([
+      "COMPLIANCE",
+      "DISABLED",
+      "GOVERNANCE"
+    ], var.object_lock_mode)
+    error_message = "Valid object lock modes are: COMPLIANCE, DISABLED, GOVERNANCE."
+  }
+}
+
+variable "object_lock_period" {
+  type        = string
+  description = "Period for which objects are locked. Valid values are days or years."
+  default     = "days"
+
+  validation {
+    condition = contains([
+      "days",
+      "years"
+    ], var.object_lock_period)
+    error_message = "Valid object lock periods are: days, years."
+  }
+}
+
+variable "object_noncurrent_expiration" {
+  type        = number
+  description = "Age (in days) before non-current versions of logs in S3 are expired."
+  default     = 30
+}
+
 variable "project" {
   type        = string
   description = "Project that these resources are supporting."
