@@ -106,14 +106,14 @@ The following options are available for each log group:
 
 ## Outputs
 
-| Name               | Description                                     | Type          |
-|--------------------|-------------------------------------------------|---------------|
-| bucket             | Name of the S3 bucket for logging.              | `string`      |
-| bucket_domain_name | FQDN of the bucket.                             | `string`      |
-| datadog_lambda     | ARN of the Datadog lambda forwarder, if in use. | `string`      |
-| kms_key_alias      | Alias of the KMS encryption key.                | `string`      |
-| kms_key_arn        | ARN of the KMS encryption key.                  | `string`      |
-| log_groups         | Map of log group names and ARNs.                | `map(string)` |
+| Name               | Description                                      | Type          |
+|--------------------|--------------------------------------------------|---------------|
+| bucket             | S3 bucket used to store logs.                    | `string`      |
+| bucket_domain_name | Domain name of the S3 bucket used to store logs. | `string`      |
+| datadog_lambda     | ARN of the Datadog lambda forwarder, if in use.  | `string`      |
+| kms_key_alias      | Alias of the KMS key used to encrypt logs.       | `string`      |
+| kms_key_arn        | ARN of the KMS key used to encrypt logs.         | `string`      |
+| log_groups         | ARNs of any created CloudWatch log groups.       | `map(string)` |
 
 [badge-checks]: https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml/badge.svg
 [badge-release]: https://img.shields.io/github/v/release/codeforamerica/tofu-modules-aws-logging?logo=github&label=Latest%20Release
