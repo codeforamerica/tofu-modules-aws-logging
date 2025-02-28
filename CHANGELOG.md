@@ -13,9 +13,9 @@ and this project adheres to
 ## 2.0.0 (2025-02-28)
 
 This release includes new features and fixes to meet NIST SP 800-53 Rev. 5
-controls in Security Hub (#13). These changes introduce breaking modifications
-to the location of certain resources. If you are upgrading from a previous
-version, you will need to update your state file to reflect the new locations.
+controls in Security Hub. These changes introduce breaking modifications to the
+location of certain resources. If you are upgrading from a previous version, you
+will need to update your state file to reflect the new locations.
 
 > [!WARNING]
 > It is highly recommended to back up your state file before making any changes
