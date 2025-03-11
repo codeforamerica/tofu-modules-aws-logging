@@ -1,6 +1,6 @@
 module "s3" {
   source  = "boldlink/s3/aws"
-  version = "2.5.0"
+  version = "~> 2.5"
 
   bucket            = var.bucket_suffix ? null : "${local.prefix}-logs"
   bucket_prefix     = var.bucket_suffix ? "${local.prefix}-logs-" : null
