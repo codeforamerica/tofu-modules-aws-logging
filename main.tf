@@ -27,6 +27,9 @@ module "s3" {
 
       abort_incomplete_multipart_upload_days = 7
 
+      # Apply this configuration to all objects in the bucket.
+      filter = { prefix = "" }
+
       # Transition the current version to infrequent access to reduce costs.
       transition = [
         {
