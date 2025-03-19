@@ -10,6 +10,12 @@ and this project adheres to
 > Version [2.0.0] introduces a breaking change. Be sure to following the upgrade
 > instructions before upgrading from a prior version.
 
+## 2.0.1 (2025-03-19)
+
+### Fix
+
+- Added empty prefix filter to address deprecation warning. (#15)
+
 ## 2.0.0 (2025-02-28)
 
 This release includes new features and fixes to meet NIST SP 800-53 Rev. 5
