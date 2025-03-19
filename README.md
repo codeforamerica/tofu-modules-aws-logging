@@ -12,16 +12,17 @@ logs.
 ## Usage
 
 > [!CAUTION]
-> Version 2.0.0 introduces a breaking change. Be sure to following the upgrade
-> instructions in the [CHANGELOG][changelog-2.0] before upgrading from a prior
-> version.
+> Version 2.0.0 introduces a breaking change. If you're upgrading from a prior
+> version, it's recommended that you skip to at least 2.1.0 which introduces an
+> automated upgrade path. If you still wish to upgrade to 2.0.x, be sure to
+> follow the upgrade instructions in the [CHANGELOG][changelog-2.0].
 
 Add this module to your `main.tf` (or appropriate) file and configure the inputs
 to match your desired configuration. For example:
 
 ```hcl
 module "logging" {
-  source = "github.com/codeforamerica/tofu-modules-aws-logging?ref=2.0.0"
+  source = "github.com/codeforamerica/tofu-modules-aws-logging?ref=2.1.0"
 
   project     = "my-project"
   environment = "dev"
