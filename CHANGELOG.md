@@ -7,8 +7,10 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 > [!CAUTION]
-> Version [2.0.0] introduces a breaking change. Be sure to following the upgrade
-> instructions before upgrading from a prior version.
+> Version [2.0.0] introduces a breaking change. If you're upgrading from a prior
+> version, it's recommended that you skip to at least [2.1.0] which introduces an
+> automated upgrade path. If you still wish to upgrade to 2.0.x, be sure to
+> follow the [upgrade instructions][2.0.0].
 
 ## 2.0.0 (2025-02-28)
 
@@ -84,3 +86,4 @@ can be found in the table below:
 - Initial release. (#1)
 
 [2.0.0]: #200-2025-02-28
+[2.1.0]: #200-2025-03-19
