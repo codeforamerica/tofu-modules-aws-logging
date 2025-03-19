@@ -12,6 +12,16 @@ and this project adheres to
 > automated upgrade path. If you still wish to upgrade to 2.0.x, be sure to
 > follow the [upgrade instructions][2.0.0].
 
+## 2.1.0 (2025-03-19)
+
+### Feat
+
+- Add automated upgrade path for moved resources. (#17)
+
+### Fix
+
+- Added empty prefix filter to address deprecation warning. (#15)
+
 ## 2.0.0 (2025-02-28)
 
 This release includes new features and fixes to meet NIST SP 800-53 Rev. 5
@@ -86,4 +96,4 @@ can be found in the table below:
 - Initial release. (#1)
 
 [2.0.0]: #200-2025-02-28
-[2.1.0]: #200-2025-03-19
+[2.1.0]: #210-2025-03-19
