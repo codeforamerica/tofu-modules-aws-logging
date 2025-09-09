@@ -12,6 +12,12 @@ and this project adheres to
 > automated upgrade path. If you still wish to upgrade to 2.0.x, be sure to
 > follow the [upgrade instructions][2.0.0].
 
+## 2.1.1 (2025-09-09)
+
+### Fix
+
+- Use `region` instead of deprecated `name` for `aws_region`. (#19)
+
 ## 2.1.0 (2025-03-19)
 
 ### Feat
