@@ -79,8 +79,7 @@ resource "aws_kms_key" "logs" {
   policy = jsonencode(yamldecode(templatefile("${path.module}/templates/key-policy.yaml.tftpl", {
     account_id : data.aws_caller_identity.identity.account_id
     partition : data.aws_partition.current.partition
-    region : data.aws_region.current.name
-    # bucket_arn : aws_s3_bucket.logs.arn
+    region : data.aws_region.current.region
     bucket_arn : module.s3.arn
     project : var.project
     environment : var.environment
