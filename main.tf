@@ -59,7 +59,8 @@ module "s3" {
 }
 
 resource "aws_s3_bucket_object_lock_configuration" "lock" {
-  for_each = var.object_lock_mode != "DISABLED" ? toset(["this"]) : toset([])
+  for_each   = var.object_lock_mode != "DISABLED" ? toset(["this"]) : toset([])
+  depends_on = [module.s3]
 
   bucket = module.s3.bucket
 
