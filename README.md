@@ -1,6 +1,6 @@
 # AWS Logging Module
 
-[![Main Checks][badge-checks]][code-checks] [![GitHub Release][badge-release]][latest-release]
+[![GitHub Release][badge-release]][latest-release]
 
 This module created an S3 bucket for logging, as well as a KMS for CloudWatch
 logs.
@@ -116,10 +116,8 @@ The following options are available for each log group:
 | kms_key_arn        | ARN of the KMS key used to encrypt logs.         | `string`      |
 | log_groups         | ARNs of any created CloudWatch log groups.       | `map(string)` |
 
-[badge-checks]: https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml/badge.svg
 [badge-release]: https://img.shields.io/github/v/release/codeforamerica/tofu-modules-aws-logging?logo=github&label=Latest%20Release
 [changelog-2.0]: CHANGELOG.md#200-2025-02-28
-[code-checks]: https://github.com/codeforamerica/tofu-modules-aws-logging/actions/workflows/main.yaml
 [infrequent-access]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html#sc-infreq-data-access
 [latest-release]: https://github.com/codeforamerica/tofu-modules-aws-logging/releases/latest
 [lifecycle-management]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html
