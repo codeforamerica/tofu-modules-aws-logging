@@ -12,6 +12,12 @@ and this project adheres to
 > automated upgrade path. If you still wish to upgrade to 2.0.x, be sure to
 > follow the [upgrade instructions][2.0.0].
 
+## 2.1.2 (2026-01-26)
+
+### Fix
+
+- Define explicit dependency on object lock configuration. (#21)
+
 ## 2.1.1 (2025-09-09)
 
 ### Fix
